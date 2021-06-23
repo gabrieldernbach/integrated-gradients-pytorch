@@ -93,7 +93,8 @@ class ImageAttributor:
         # clip outlier [0., 0.25] -> [0., 1.]
         hm = torch.clip(hm, max=0.25) * 4
         # flip high value == dark colour
-        # hm = ((1 - hm).numpy() * 255).astype("uint8")
-        # hm = Image.fromarray(hm)
+        hm = ((1 - hm).numpy() * 255).astype("uint8")
+        hm = np.repeat(hm[..., None], 3, axis=-1)
+        hm = Image.fromarray(hm)
         return hm
 
